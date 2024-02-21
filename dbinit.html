@@ -1,0 +1,47 @@
+<script total>
+
+	exports.name = 'DB Init';
+	exports.icon = 'ti ti-database';
+	exports.author = 'Total.js';
+	exports.version = '1';
+	exports.group = 'Databases';
+	exports.config = { connection: '', name: '', pooling: 0, database: 'querybuilderpg' };
+
+	exports.make = function(instance, config) {
+
+		instance.configure = function() {
+			config.connection && NPMINSTALL(config.database, function() {
+				require(config.database).init(config.name || 'default', config.connection, config.pooling || null);
+			});
+		};
+		instance.configure();
+	};
+
+</script>
+
+<readme>
+This component can create and give access to datases engines through Total.js [QueryBuilder](https://docs.totaljs.com/total4/pzbr001pr41d/):
+- QueryBuilder (pg)
+- QueryBuilder (mysql)
+- QueryBuilder (sqlite3)
+- QueryBuilder (totaldb)
+</readme>
+
+<settings>
+	<div class="padding">
+		<div class="grid-2">
+			<ui-component name="input" path="?.name">Name</ui-component>
+			<ui-component name="input" path="?.connection" config="required:1;camouflage:1">Connection</ui-component>
+			<ui-component name="input" path="?.pooling" config="type:Number">Pooling</ui-component>
+			<ui-component name="input" path="?.database" config="dirsource:querybuilderpg|Postgres,querybuildermysql2|MySql 2,querybuildersqlite3|Sqlite3,querybuildertotaldb|Totaldb">Pooling</ui-component>
+		</div>
+
+	</div>
+</settings>
+
+<body>
+	<div class="padding center">
+		<i class="$ICON" style="font-size:50px;color:#5C1DC4"></i>
+		<div class="fs12 mt10">$NAME</div>
+	</div>
+</body>
